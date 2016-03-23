@@ -1,0 +1,123 @@
+.class
+.metadata
+.settings
+.checkstyle
+.classpath
+.idea/
+RemoteSystemsTempFiles/
+
+ext-system/.gitignore
+*~
+*.swp
+*.log
+*.prefs
+*.iml
+.DS_Store
+#
+#   devops scripts bin folder
+#
+devops/bin
+devops/**/.*
+.gradle/
+/build
+devops/**/bin
+gradle-app.settings
+**/testclasses
+hybris/.idea/
+ext-system/**/bin
+.lastupdate
+#
+# generated sources
+#
+
+#
+# compilation folder by ant
+#
+**/classes
+**/gensrc
+
+#
+# eclipse compilation folder
+#
+**/eclipsebin/
+hybris/bin/custom/koton/**/bin/
+hybris/bin/custom/**/bin/
+#
+# hybris
+#
+hybris-Mobile-Apps-SDK/
+hybris-dependencies/
+hybris-ems/
+hybris-oms/
+hybris-sbg/
+hybris/bin/ext-accelerator/
+hybris/bin/ext-addon/
+hybris/bin/ext-backoffice/
+hybris/bin/ext-channel/
+hybris/bin/ext-cockpit/
+hybris/bin/ext-commerce/
+hybris/bin/ext-content/
+hybris/bin/ext-data/
+hybris/bin/ext-deprecated/
+hybris/bin/ext-integration/
+hybris/bin/ext-platform-optional/
+hybris/bin/ext-print/
+hybris/bin/ext-supportability/
+hybris/bin/ext-template/
+hybris/bin/platform/
+hybris/data/
+hybris/log/
+hybris/sampleconfigurations/
+hybris/temp/
+hybris/config/bin/
+hybris/media/
+#
+# restrictive gitignore entries for ant command issues
+#
+hybris/config/local.properties
+hybris/bin/custom/koton/kotoncore/hmc/bin/
+
+# "ant clean all" command creates these files or updates if alreafy exists
+hybris/bin/custom/**/platformhome.properties
+hybris/bin/custom/**/build.xml
+hybris/bin/custom/**/extensioninfo.xsd
+hybris/bin/custom/**/hmc.xsd
+hybris/bin/custom/**/items.xsd
+hybris/bin/custom/**/beans.xsd
+
+build.xml
+extensioninfo.xsd
+hmc.xsd
+items.xsd
+beans.xsd
+notes.txt
+
+# jar
+*.jar
+
+
+hybris/bin/custom/kotonbackoffice/resources/backoffice/kotonbackoffice_bof.jar
+
+# test xml files
+*-testclasses.xml
+
+# Strange file generation from ant command
+AbstractLoginPageController.java
+RegistrationValidator.java
+
+# Licence
+hybris/config/licence/hybrislicence.jar
+
+licenses/
+
+#images
+hybris/bin/custom/**/images/*
+
+#svn
+hybris/bin/custom/**/.svn/*
+
+#flags
+hybris/bin/custom/**/flags/*
+
+#fonts
+hybris/bin/custom/**/fonts/*
