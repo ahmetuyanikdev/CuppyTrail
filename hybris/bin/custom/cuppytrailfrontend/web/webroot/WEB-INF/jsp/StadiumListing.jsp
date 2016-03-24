@@ -6,8 +6,7 @@
         <h1>Stadium Listing</h1>
      <ul>
      <c:forEach var="stadium" items="${stadiums}">
-        <li >
-        	<p>${stadium.stadiumtype}</p>
+        <li>
             <a href="./stadiums/${stadium.name}">${stadium.name}</a>
             <img style="margin-left:20px;vertical-align:top;margin-bottom:20px" src="${stadium.imageUrl}"/>
         </li>
