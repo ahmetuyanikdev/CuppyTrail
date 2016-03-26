@@ -23,6 +23,7 @@
 						<attribute name="code" />
 						<attribute name="capacity" />
 						<attribute name="matches" />
+						<attribute name="StadiumType"/>
 					</itemlayout>
 				</listview>
 			</result>

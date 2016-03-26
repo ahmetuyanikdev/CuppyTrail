@@ -6,8 +6,6 @@ import de.hybris.platform.cuppytrail.data.MatchSummaryData;
 import de.hybris.platform.cuppytrail.data.StadiumData;
 import de.hybris.platform.cuppytrail.facades.StadiumFacade;
 import de.hybris.platform.cuppytrail.model.StadiumModel;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -15,11 +13,17 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.stereotype.Component;
+
 
 @Component(value = "stadiumFacade")
 public class DefaultStadiumFacade implements StadiumFacade
 {
 	private StadiumService stadiumService;
+	private static final Logger LOG = Logger.getLogger(DefaultStadiumFacade.class);
+
 
 	@Override
 	public List<StadiumData> getStadiums(final String format)
@@ -41,7 +45,8 @@ public class DefaultStadiumFacade implements StadiumFacade
 
 			final StadiumData sfd = new StadiumData();
 			sfd.setName(sm.getCode());
-
+			sfd.setType(sm.getStadiumType().getCode());
+			LOG.info("#--stype " + sm.getStadiumType());
 			if (sm.getCapacity() != null)
 			{
 				sfd.setCapacity(sm.getCapacity().toString());
@@ -119,5 +124,43 @@ public class DefaultStadiumFacade implements StadiumFacade
 	public void setStadiumService(final StadiumService stadiumService)
 	{
 		this.stadiumService = stadiumService;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.hybris.platform.cuppytrail.facades.StadiumFacade#getStadiumsByType(java.lang.String)
+	 */
+	@Override
+	public List<StadiumData> getStadiumsByType(final String type, final String format)
+	{
+		final List<StadiumModel> stadiumModels = stadiumService.getStadiumsByType(type);
+		final List<StadiumData> stadiumFacadeData = new ArrayList<StadiumData>();
+		String urlImg;
+		for (final StadiumModel sm : stadiumModels)
+		{
+			try
+			{
+				urlImg = stadiumService.getImageUrlFromStadium(sm, format);
+			}
+			catch (final Exception e)
+			{
+				urlImg = "";
+				// something bad happened, possibly no image available
+			}
+
+			final StadiumData sfd = new StadiumData();
+			sfd.setName(sm.getCode());
+			sfd.setType(sm.getStadiumType().getCode());
+
+			if (sm.getCapacity() != null)
+			{
+				sfd.setCapacity(sm.getCapacity().toString());
+			}
+
+			sfd.setImageUrl(urlImg);
+			stadiumFacadeData.add(sfd);
+		}
+		return stadiumFacadeData;
 	}
 }

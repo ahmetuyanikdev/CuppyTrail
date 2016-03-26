@@ -63,5 +63,15 @@ public class CustomStadiumDAO implements StadiumDAO
 		return flexibleSearchService.<StadiumModel> search(query).getResult();
 	}
 
+	@Override
+	public List<StadiumModel> findStadiumsByType(final String type)
+	{
+		final String queryString = "SELECT {p:" + StadiumModel.PK + "}" + " FROM {" + StadiumModel._TYPECODE + " AS p} "
+				+ "WHERE {p:" + StadiumModel.STADIUMTYPE + "}=({{SELECT {pk} From  {StadiumType} where {code}=?type}})";
+		final FlexibleSearchQuery query = new FlexibleSearchQuery(queryString);
+		query.addQueryParameter("type", type);
+		return flexibleSearchService.<StadiumModel> search(query).getResult();
+	}
+
 
 }

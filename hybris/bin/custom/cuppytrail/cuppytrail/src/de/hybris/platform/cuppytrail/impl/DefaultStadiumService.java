@@ -1,4 +1,3 @@
-
 package de.hybris.platform.cuppytrail.impl;
 
 import de.hybris.platform.core.model.media.MediaFormatModel;
@@ -9,10 +8,12 @@ import de.hybris.platform.cuppytrail.model.StadiumModel;
 import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
 import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
 import de.hybris.platform.servicelayer.media.MediaService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 
-import java.util.List;
 
 public class DefaultStadiumService implements StadiumService
 {
@@ -23,7 +24,7 @@ public class DefaultStadiumService implements StadiumService
 
 	/**
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see de.hybris.platform.cuppytrail.StadiumService#getStadiums()
 	 */
 	@Override
@@ -34,7 +35,7 @@ public class DefaultStadiumService implements StadiumService
 
 	/**
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see de.hybris.platform.cuppytrail.StadiumService#getStadiumForCode(java.lang.String)
 	 */
 	@Override
@@ -76,5 +77,16 @@ public class DefaultStadiumService implements StadiumService
 		{
 			return null;
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.hybris.platform.cuppytrail.StadiumService#getStadiumsByType(java.lang.String)
+	 */
+	@Override
+	public List<StadiumModel> getStadiumsByType(final String type)
+	{
+		return stadiumDAO.findStadiumsByType(type);
 	}
 }

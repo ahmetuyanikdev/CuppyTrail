@@ -1,4 +1,3 @@
-
 package de.hybris.platform.cuppytrailfrontend.controller;
 
 import de.hybris.platform.cuppytrail.data.StadiumData;
@@ -36,6 +35,15 @@ public class StadiumsController
 		stadium.setName(stadium.getName());//StadiumsNameEncoded.getNameEncoded(stadium.getName()));
 		model.addAttribute("stadium", stadium);
 		return "StadiumDetails";
+	}
+
+	@RequestMapping(value = "/stadiums/type/{stadiumType}")
+	public String showStadiumsByType(@PathVariable final String stadiumType, final Model model)
+	{
+
+		final List<StadiumData> stadiums = stadiumFacade.getStadiumsByType(stadiumType, "stadiumDetailsFormat");
+		model.addAttribute("stadiums", stadiums);
+		return "StadiumListing";
 	}
 
 	@Autowired
