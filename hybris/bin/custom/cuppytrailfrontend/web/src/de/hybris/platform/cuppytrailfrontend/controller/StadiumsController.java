@@ -40,7 +40,6 @@ public class StadiumsController
 	@RequestMapping(value = "/stadiums/type/{stadiumType}")
 	public String showStadiumsByType(@PathVariable final String stadiumType, final Model model)
 	{
-
 		final List<StadiumData> stadiums = stadiumFacade.getStadiumsByType(stadiumType, "stadiumDetailsFormat");
 		model.addAttribute("stadiums", stadiums);
 		return "StadiumListing";
