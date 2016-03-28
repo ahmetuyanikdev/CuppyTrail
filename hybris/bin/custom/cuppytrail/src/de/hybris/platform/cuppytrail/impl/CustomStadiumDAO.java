@@ -10,6 +10,7 @@ import de.hybris.platform.servicelayer.search.FlexibleSearchService;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +26,7 @@ public class CustomStadiumDAO implements StadiumDAO
 	@Autowired
 	private FlexibleSearchService flexibleSearchService;
 
-
+	final static Logger logger  = Logger.getLogger(CustomStadiumDAO.class);
 
 	@Override
 	public List<StadiumModel> findStadiums()
@@ -55,24 +56,27 @@ public class CustomStadiumDAO implements StadiumDAO
 	@Override
 	public List<StadiumModel> findStadiumsByCode(final String code)
 	{
+		logger.info("#-- findStadiumsByCode method");
 		final String queryString = //
 		"SELECT {p:" + StadiumModel.PK + "}" //
 				+ "FROM {" + StadiumModel._TYPECODE + " AS p} "//
 				+ "WHERE " + "{p:" + StadiumModel.CODE + "}=?code ";
 
 		final FlexibleSearchQuery query = new FlexibleSearchQuery(queryString);
+		logger.info("#-- set query parameters");
 		query.addQueryParameter("code", code);
-
 		return flexibleSearchService.<StadiumModel> search(query).getResult();
 	}
 
 	@Override
 	public List<StadiumModel> findStadiumsByType(final String type)
 	{
+		logger.info("#--findStadiumsByType method");
 		final String queryString = "SELECT {p:" + StadiumModel.PK + "}" + " FROM {" + StadiumModel._TYPECODE + " AS p} "
 				+ "WHERE {p:" + StadiumModel.STADIUMTYPE + "}=({{SELECT {pk} From  {StadiumType} where {code}=?type}})";
 		final FlexibleSearchQuery query = new FlexibleSearchQuery(queryString);
 		query.addQueryParameter("type", type);
+		logger.info("#--set query parameters");
 		return flexibleSearchService.<StadiumModel> search(query).getResult();
 	}
 
