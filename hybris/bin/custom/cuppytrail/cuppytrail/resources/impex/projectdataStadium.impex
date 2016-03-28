@@ -1,6 +1,7 @@
 INSERT_UPDATE Stadium;code[unique=true];capacity
 ;Emirates;60361
 ;VillaPark;42788
+;Council;44637
 
 UPDATE Match;id[unique=true];group(competition(code),code)[unique=true];stadium(code)
 ;1;wc2010:A;Emirates
