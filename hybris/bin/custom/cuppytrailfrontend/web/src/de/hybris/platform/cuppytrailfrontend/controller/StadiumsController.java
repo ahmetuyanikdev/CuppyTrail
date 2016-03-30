@@ -16,44 +16,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-public class StadiumsController
-{
-	final static Logger logger = Logger.getLogger(StadiumsController.class);
+public class StadiumsController {
+    final static Logger logger = Logger.getLogger(StadiumsController.class);
 
-	private StadiumFacade stadiumFacade;
+    private StadiumFacade stadiumFacade;
 
-	@RequestMapping(value = "/stadiums")
-	public String showStadiums(final Model model)
-	{
-		logger.info("Querying all Stadiums");
-		final List<StadiumData> stadiums = stadiumFacade.getStadiums("stadiumListFormat");
-		model.addAttribute("stadiums", stadiums);
-		return "StadiumListing";
-	}
+    @RequestMapping(value = "/stadiums")
+    public String showStadiums(final Model model) {
+        logger.info("Querying all Stadiums");
+        final List<StadiumData> stadiums = stadiumFacade.getStadiums("stadiumListFormat");
+        model.addAttribute("stadiums", stadiums);
+        return "StadiumListing";
+    }
 
-	@RequestMapping(value = "/stadiums/{stadiumName}")
-	public String showStadiumDetails(@PathVariable String stadiumName, final Model model) throws UnsupportedEncodingException
-	{
-		logger.info("#--Querying Stadium for detail");
-		stadiumName = URLDecoder.decode(stadiumName, "UTF-8");
-		final StadiumData stadium = stadiumFacade.getStadium(stadiumName, "stadiumDetailsFormat");
-		stadium.setName(stadium.getName());//StadiumsNameEncoded.getNameEncoded(stadium.getName()));
-		model.addAttribute("stadium", stadium);
-		return "StadiumDetails";
-	}
+    @RequestMapping(value = "/stadiums/{stadiumName}")
+    public String showStadiumDetails(@PathVariable String stadiumName, final Model model) throws UnsupportedEncodingException {
+        logger.info("#--Querying Stadium for detail");
+        stadiumName = URLDecoder.decode(stadiumName, "UTF-8");
+        final StadiumData stadium = stadiumFacade.getStadium(stadiumName, "stadiumDetailsFormat");
+        stadium.setName(stadium.getName());//StadiumsNameEncoded.getNameEncoded(stadium.getName()));
+        model.addAttribute("stadium", stadium);
+        return "StadiumDetails";
+    }
 
-	@RequestMapping(value = "/stadiums/type/{stadiumType}")
-	public String showStadiumsByType(@PathVariable final String stadiumType, final Model model)
-	{
-		logger.info("#--Quering for stadiums by  type");
-		final List<StadiumData> stadiums = stadiumFacade.getStadiumsByType(stadiumType, "stadiumDetailsFormat");
-		model.addAttribute("stadiums", stadiums);
-		return "StadiumListing";
-	}
+    @RequestMapping(value = "/stadiums/type/{stadiumType}")
+    public String showStadiumsByType(@PathVariable final String stadiumType, final Model model) {
+        logger.info("#--Quering for stadiums by  type");
+        final List<StadiumData> stadiums = stadiumFacade.getStadiumsByType(stadiumType, "stadiumDetailsFormat");
+        model.addAttribute("stadiums", stadiums);
+        return "StadiumListing";
+    }
 
-	@Autowired
-	public void setFacade(final StadiumFacade facade)
-	{
-		this.stadiumFacade = facade;
-	}
+    @Autowired
+    public void setFacade(final StadiumFacade facade) {
+        this.stadiumFacade = facade;
+    }
 }
