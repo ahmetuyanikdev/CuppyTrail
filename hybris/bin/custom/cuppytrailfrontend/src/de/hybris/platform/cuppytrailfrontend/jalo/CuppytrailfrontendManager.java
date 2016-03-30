@@ -14,13 +14,12 @@
 package de.hybris.platform.cuppytrailfrontend.jalo;
 
 import de.hybris.platform.core.Registry;
+import de.hybris.platform.cuppytrailfrontend.constants.CuppytrailfrontendConstants;
 import de.hybris.platform.util.JspContext;
 
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-
-import de.hybris.platform.cuppytrailfrontend.constants.CuppytrailfrontendConstants;
 
 
 
@@ -50,8 +49,8 @@ public class CuppytrailfrontendManager extends GeneratedCuppytrailfrontendManage
 	 */
 	public static CuppytrailfrontendManager getInstance()
 	{
-		return (CuppytrailfrontendManager) Registry.getCurrentTenant().getJaloConnection().getExtensionManager().getExtension(
-				CuppytrailfrontendConstants.EXTENSIONNAME);
+		return (CuppytrailfrontendManager) Registry.getCurrentTenant().getJaloConnection().getExtensionManager()
+				.getExtension(CuppytrailfrontendConstants.EXTENSIONNAME);
 	}
 
 
