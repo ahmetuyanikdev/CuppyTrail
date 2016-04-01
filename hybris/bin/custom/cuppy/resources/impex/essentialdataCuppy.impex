@@ -17,6 +17,7 @@ insert_update UserGroup;uid[unique=true];locname[lang=de];locname[lang=en];locna
 ;cuppyplayers;Spieler;Players;Gracze;Joueurs;true
 ;cuppyadmins;Admins;Admins;Administratorzy;Administrateurs;false;employeegroup
 
+
 insert_update CountryFlag;code[unique=true];realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator];catalogVersion(catalog(id),version)[default=Default:Online]
 ;DE;de.png;jar:/cuppy/flags/countries/de.png
 ;FR;fr.png;jar:/cuppy/flags/countries/fr.png
@@ -123,4 +124,10 @@ INSERT_UPDATE NotNullConstraint;active;descriptor(enclosingType(code),qualifier)
 INSERT_UPDATE DecimalMinConstraint;active;descriptor(enclosingType(code),qualifier);id[unique=true];message[lang=de];message[lang=en];qualifier;severity(code,itemtype(code));target;type(code);value
 ;true;Group:multiplier;multiplierMinimalConstraint;Wertungsfaktor darf nicht negativ sein;Score multiplier can not be negative;multiplier;ERROR:Severity;de.hybris.platform.cuppy.model.GroupModel;Group;0
 
+
 #% de.hybris.platform.core.Registry.getApplicationContext().getBean(de.hybris.platform.validation.services.ValidationService.class).reloadValidationEngine();
+
+
+$setPassword=@password[translator=de.hybris.platform.impex.jalo.translators.ConvertPlaintextToEncodedUserPasswordTranslator][default='$passwordEncoding:$defaultPassword']
+INSERT_UPDATE Employee;uid[unique=true];name;description;sessionLanguage(isocode);groups(uid);$setPassword
+;auyanik;Ahmet Uyanik;Admin;en;cuppyadmins;auyanik
