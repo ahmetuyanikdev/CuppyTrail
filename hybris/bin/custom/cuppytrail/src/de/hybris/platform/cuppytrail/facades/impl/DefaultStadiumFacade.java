@@ -19,126 +19,159 @@ import org.springframework.stereotype.Component;
 
 
 @Component(value = "stadiumFacade")
-public class DefaultStadiumFacade implements StadiumFacade {
-    private StadiumService stadiumService;
-    private static final Logger LOG = Logger.getLogger(DefaultStadiumFacade.class);
+public class DefaultStadiumFacade implements StadiumFacade
+{
+	private StadiumService stadiumService;
+	private static final Logger LOG = Logger.getLogger(DefaultStadiumFacade.class);
 
 
-    @Override
-    public List<StadiumData> getStadiums(final String format) {
-        final List<StadiumModel> stadiumModels = stadiumService.getStadiums();
-        final List<StadiumData> stadiumFacadeData = new ArrayList<StadiumData>();
-        String urlImg;
-        for (final StadiumModel sm : stadiumModels) {
-            try {
-                urlImg = stadiumService.getImageUrlFromStadium(sm, format);
-            } catch (final Exception e) {
-                urlImg = "";
-                // something bad happened, possibly no image available
-            }
+	@Override
+	public List<StadiumData> getStadiums(final String format)
+	{
+		final List<StadiumModel> stadiumModels = stadiumService.getStadiums();
+		final List<StadiumData> stadiumFacadeData = new ArrayList<StadiumData>();
+		String urlImg;
+		for (final StadiumModel sm : stadiumModels)
+		{
+			try
+			{
+				urlImg = stadiumService.getImageUrlFromStadium(sm, format);
+			}
+			catch (final Exception e)
+			{
+				urlImg = "";
+				// something bad happened, possibly no image available
+			}
 
-            final StadiumData sfd = new StadiumData();
-            sfd.setName(sm.getCode());
-            sfd.setType(sm.getStadiumType().getCode());
-            LOG.info("#--stype " + sm.getStadiumType());
-            if (sm.getCapacity() != null) {
-                sfd.setCapacity(sm.getCapacity().toString());
-            }
+			final StadiumData sfd = new StadiumData();
+			sfd.setName(sm.getCode());
+			sfd.setType(sm.getStadiumType().getCode());
+			LOG.info("#--stype " + sm.getStadiumType());
+			if (sm.getCapacity() != null)
+			{
+				sfd.setCapacity(sm.getCapacity().toString());
+			}
 
-            sfd.setImageUrl(urlImg);
-            stadiumFacadeData.add(sfd);
-        }
-        return stadiumFacadeData;
-    }
+			sfd.setImageUrl(urlImg);
+			stadiumFacadeData.add(sfd);
+		}
+		return stadiumFacadeData;
+	}
 
-    @Override
-    public StadiumData getStadium(final String name, final String format) {
-        final StadiumModel stadium = stadiumService.getStadiumForCode(name);
-        if (stadium == null) {
-            return null;
-        }
-        // Create a list of MatchSummaryData from the matches
-        final List<MatchSummaryData> matchSummary = new ArrayList<MatchSummaryData>();
+	@Override
+	public StadiumData getStadium(final String name, final String format)
+	{
+		final StadiumModel stadium = stadiumService.getStadiumForCode(name);
+		if (stadium == null)
+		{
+			return null;
+		}
+		// Create a list of MatchSummaryData from the matches
+		final List<MatchSummaryData> matchSummary = new ArrayList<MatchSummaryData>();
 
-        if (stadium.getMatches() != null) {
-            final Iterator<MatchModel> matchesIterator = stadium.getMatches().iterator();
+		if (stadium.getMatches() != null)
+		{
+			final Iterator<MatchModel> matchesIterator = stadium.getMatches().iterator();
 
-            while (matchesIterator.hasNext()) {
-                final MatchModel match = matchesIterator.next();
-                final MatchSummaryData summary = new MatchSummaryData();
-                final String homeTeam = match.getHomeTeam().getName();
-                final String guestTeam = match.getGuestTeam().getName();
-                final Date matchDate = match.getDate();
-                // If no goals are specified provide a user friendly "-" instead of null
-                final String guestGoals = match.getGuestGoals() == null ? "-" : match.getGuestGoals().toString();
-                final String homeGoals = match.getHomeGoals() == null ? "-" : match.getHomeGoals().toString();
-                summary.setHomeTeam(homeTeam);
-                summary.setGuestTeam(guestTeam);
-                summary.setDate(matchDate);
-                summary.setGuestGoals(guestGoals);
-                summary.setHomeGoals(homeGoals);
-                final String formatedDate = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(matchDate);
-                final String matchSummaryFormatted = homeTeam + ":( " + homeGoals + " ) " + guestTeam + " ( " + guestGoals + " ) "
-                        + formatedDate;
-                summary.setMatchSummaryFormatted(matchSummaryFormatted);
-                matchSummary.add(summary);
-            }
-        }
+			while (matchesIterator.hasNext())
+			{
+				final MatchModel match = matchesIterator.next();
+				final MatchSummaryData summary = new MatchSummaryData();
+				final String homeTeam = match.getHomeTeam().getName();
+				final String guestTeam = match.getGuestTeam().getName();
+				final Date matchDate = match.getDate();
+				// If no goals are specified provide a user friendly "-" instead of null
+				final String guestGoals = match.getGuestGoals() == null ? "-" : match.getGuestGoals().toString();
+				final String homeGoals = match.getHomeGoals() == null ? "-" : match.getHomeGoals().toString();
+				summary.setHomeTeam(homeTeam);
+				summary.setGuestTeam(guestTeam);
+				summary.setDate(matchDate);
+				summary.setGuestGoals(guestGoals);
+				summary.setHomeGoals(homeGoals);
+				final String formatedDate = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(matchDate);
+				final String matchSummaryFormatted = homeTeam + ":( " + homeGoals + " ) " + guestTeam + " ( " + guestGoals + " ) "
+						+ formatedDate;
+				summary.setMatchSummaryFormatted(matchSummaryFormatted);
+				matchSummary.add(summary);
+			}
+		}
 
-        String urlBigImg;
-        try {
-            urlBigImg = stadiumService.getImageUrlFromStadium(stadium, format);
-        } catch (final Exception e) {
-            urlBigImg = "";
-        }
+		String urlBigImg;
+		try
+		{
+			urlBigImg = stadiumService.getImageUrlFromStadium(stadium, format);
+		}
+		catch (final Exception e)
+		{
+			urlBigImg = "";
+		}
 
-        // Now we can create the StadiumData transfer object
-        final StadiumData stadiumData = new StadiumData();
-        stadiumData.setName(stadium.getCode());
+		// Now we can create the StadiumData transfer object
+		final StadiumData stadiumData = new StadiumData();
+		stadiumData.setName(stadium.getCode());
 
-        if (stadium.getCapacity() != null) {
-            stadiumData.setCapacity(stadium.getCapacity().toString());
-        }
+		if (stadium.getCapacity() != null)
+		{
+			stadiumData.setCapacity(stadium.getCapacity().toString());
+		}
 
-        stadiumData.setMatches(matchSummary);
-        stadiumData.setImageUrl(urlBigImg);
-        return stadiumData;
-    }
+		stadiumData.setMatches(matchSummary);
+		stadiumData.setImageUrl(urlBigImg);
+		return stadiumData;
+	}
 
-    @Required
-    public void setStadiumService(final StadiumService stadiumService) {
-        this.stadiumService = stadiumService;
-    }
+	@Required
+	public void setStadiumService(final StadiumService stadiumService)
+	{
+		this.stadiumService = stadiumService;
+	}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.hybris.platform.cuppytrail.facades.StadiumFacade#getStadiumsByType(java.lang.String)
-     */
-    @Override
-    public List<StadiumData> getStadiumsByType(final String type, final String format) {
-        final List<StadiumModel> stadiumModels = stadiumService.getStadiumsByType(type);
-        final List<StadiumData> stadiumFacadeData = new ArrayList<StadiumData>();
-        String urlImg;
-        for (final StadiumModel sm : stadiumModels) {
-            try {
-                urlImg = stadiumService.getImageUrlFromStadium(sm, format);
-            } catch (final Exception e) {
-                urlImg = "";
-                // something bad happened, possibly no image available
-            }
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see de.hybris.platform.cuppytrail.facades.StadiumFacade#getStadiumsByType(java.lang.String)
+	 */
+	@Override
+	public List<StadiumData> getStadiumsByType(final String type, final String format)
+	{
+		final List<StadiumModel> stadiumModels = stadiumService.getStadiumsByType(type);
+		final List<StadiumData> stadiumFacadeData = new ArrayList<StadiumData>();
+		String urlImg = "";
+		for (final StadiumModel sm : stadiumModels)
+		{
+			try
+			{
+				if (!format.equals("none"))
+				{
+					urlImg = stadiumService.getImageUrlFromStadium(sm, format);
+				}
 
-            final StadiumData sfd = new StadiumData();
-            sfd.setName(sm.getCode());
-            sfd.setType(sm.getStadiumType().getCode());
+			}
+			catch (final Exception e)
+			{
+				urlImg = "";
+				LOG.error("Detailed exception " + e.getMessage());
+			}
+			finally
+			{
 
-            if (sm.getCapacity() != null) {
-                sfd.setCapacity(sm.getCapacity().toString());
-            }
+				final StadiumData sfd = new StadiumData();
+				sfd.setName(sm.getCode());
+				sfd.setType(sm.getStadiumType().getCode());
 
-            sfd.setImageUrl(urlImg);
-            stadiumFacadeData.add(sfd);
-        }
-        return stadiumFacadeData;
-    }
+				if (sm.getCapacity() != null)
+				{
+					sfd.setCapacity(sm.getCapacity().toString());
+				}
+
+				if (!urlImg.equals(""))
+				{
+					sfd.setImageUrl(urlImg);
+
+				}
+				stadiumFacadeData.add(sfd);
+			}
+		}
+		return stadiumFacadeData;
+	}
 }

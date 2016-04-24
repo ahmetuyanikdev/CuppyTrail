@@ -14,7 +14,8 @@
         <extension name="cockpit" />
         <extension name="hmc" />
         <extension name="mcc" />
-        <extension name="platformhmc" />                                               
+        <extension name="platformhmc" /> 
+        <extension name="platformwebservices" />                                              
         <extension name="mediaconversion" />      
 
 		<extension name="cuppy"/>

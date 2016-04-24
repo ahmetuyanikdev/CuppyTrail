@@ -130,4 +130,4 @@ INSERT_UPDATE DecimalMinConstraint;active;descriptor(enclosingType(code),qualifi
 
 $setPassword=@password[translator=de.hybris.platform.impex.jalo.translators.ConvertPlaintextToEncodedUserPasswordTranslator][default='$passwordEncoding:$defaultPassword']
 INSERT_UPDATE Employee;uid[unique=true];name;description;sessionLanguage(isocode);groups(uid);$setPassword
-;auyanik;Ahmet Uyanik;Admin;en;cuppyadmins;auyanik
+;auyanik;Ahmet Uyanik;Admin;en;cuppyadmins,webservicegroup;auyanik
